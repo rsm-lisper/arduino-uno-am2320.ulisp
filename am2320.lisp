@@ -1,18 +1,20 @@
 
-(defun rb (c str)
-  (when (< 0 c)
+;; bytes-read
+;; - n :: number of bytes to read
+;; - str :: stream to read from
+(defun br (n str)
+  (when (< 0 n)
     (cons (read-byte str)
-	  (rb (1- c) str))))
+	  (br (1- n) str))))
 
-(defun wi (re bdy)
-  (with-i2c (str 92 re)
-    (when str
-      (eval bdy))))
-
-(defun thr ()
+;; get-temperature-humidity
+(defun gth ()
   (with-i2c (str 92))
-  (when (wi nil '(dolist (v '(3 0 4) t) (write-byte v str)))
-    (wi 8 '(let ((da (rb 8 str)))
-	     (list
-	      (/ (+ (ash (logand (nth 4 da) 127) 8) (nth 5 da)) 10)
-	      (/ (+ (ash (nth 2 da) 8) (nth 3 da)) 10))))))
+  (when (with-i2c (str 92)
+	  (when str (dolist (b '(3 0 4) t)
+		      (write-byte b str))))
+    (with-i2c (str 92 8)
+      (when str (let ((thd (br 8 str)))
+		  (list
+		   (/ (+ (ash (logand (nth 4 thd) 127) 8) (nth 5 thd)) 10)
+		   (/ (+ (ash (nth 2 thd) 8) (nth 3 thd)) 10)))))))
