@@ -1,4 +1,4 @@
-#+TITLE: * Arduino Uno Temperature and Humidity Sensor (AM2320) support in uLisp.
+*Arduino Uno AM2320 I2C (temperature and humidity) sensor support in uLisp.*
 
 ** Connecting AM2320 Sensor to Arduino Uno
 | *AM2320 Front*               |
