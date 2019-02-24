@@ -1,1 +1,12 @@
-*Temperature and humidity Arduino Uno sensor (AM2320) support in uLisp.*
+*Arduino Uno Temperature and Humidity Sensor (AM2320) support in uLisp.*
+
+* Connecting AM2320 Sensor to Arduino Uno
+| AM2320 Front                 |
+|------+--------+-----+--------|
+| VDD  | SDA    | GND | SCL    |
+|                              |
+| 5.5V | SDA/A4 | GND | SCL/A5 |
+|------+--------+-----+--------|
+| Arduino Uno                  |
+
+(Front of AM2320 Sensor is where marking on the cover are)
