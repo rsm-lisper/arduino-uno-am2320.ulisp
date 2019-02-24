@@ -1,6 +1,6 @@
-*Arduino Uno Temperature and Humidity Sensor (AM2320) support in uLisp.*
+* Arduino Uno Temperature and Humidity Sensor (AM2320) support in uLisp.
 
-* Connecting AM2320 Sensor to Arduino Uno
+** Connecting AM2320 Sensor to Arduino Uno
 | *AM2320 Front*               |
 |------+--------+-----+--------|
 | VDD  | SDA    | GND | SCL    |
@@ -11,25 +11,29 @@
 
 (Front of AM2320 Sensor is where the markings on the cover are.)
 
-* Usage
+** Usage
 
 Sensor I2C address is defined in line:
-#+BEGIN_EXAMPLE common-lisp
+#+BEGIN_EXAMPLE
 (defvar tha (ash #xb8 -1))
 #+END_EXAMPLE
 
-*gth* /function/
+To request sensor information, we call =gth= (get-temperature-humidity) function:
+#+BEGIN_EXAMPLE
+> (gth)
+(25 50)
 
-Returns list with two values - temperature and humidity.
+#+END_EXAMPLE
+It returns list with two values - temperature and humidity.
 
 On connection problems returns =nil=.
 
-_Warning_
+*Warning!*
 AM2320 is very slow. It's slow in response and slow in refreshing internal data (2s!). On the first request it can reply with some very old data, so it's good idea to send another request after ie 3s.
 
-* Implementation
-For some strange reason, sensor does not respond to the first connection, so we have to drop it and then connect again, for real, to send request. Also for some strange reason we can't restart I2C to read response, we have to close it, again, and then connect to read 8 byte long response.
+** Implementation
+For some strange reason, sensor does not respond to the first connection. So we have to drop it and then connect again, to send request. Also for some strange reason, we can't restart I2C to read the response. We have to close connection again, and then connect to read 8 bytes long response.
 
-There is no CRC check for now.
+There is no CRC check implemented yet.
 
-Then we piece together information from response we received.
+At the end we piece together information from the response we received.
