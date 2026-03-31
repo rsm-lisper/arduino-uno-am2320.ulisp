@@ -1,4 +1,4 @@
-*Active development moved to [[https://codeberg.org/rsm/arduino-uno-am2320.ulisp]].
+*Active development moved to [[https://codeberg.org/rsm/arduino-uno-am2320.ulisp]].*
 
 ------
 
